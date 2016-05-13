@@ -34,6 +34,12 @@ var requestID = function(req, res, next) {
   next();
 };
 
+app.disable('x-powered-by'); // remove powered by express
+
+// views
+app.set('views', path.join(__dirname, 'server/views'));
+app.set('view engine', 'ejs');
+
 // middlewares
 app.use(morgan('dev'));
 app.use(bodyParser.json()); // parses application/json
@@ -43,6 +49,10 @@ app.use(methodOverride());  // HTTP verbs like PUT or DELETE
 app.use(requestID); // request id for logger
 app.use(helmet()); // implements 6 measures for security headers
 app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto' }));
+app.use(flash()); //use flash
+
+app.use(require('serve-favicon')(__dirname + '/public/images/favicon.ico')); //serve favicon
+app.use(require('serve-static')(path.join(__dirname, 'public'))); //  server static files
 
 // routes
 require('./server/routes/index')(app);
