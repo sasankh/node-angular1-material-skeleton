@@ -1,1 +1,1 @@
-# sasankh/node-angular1-material-skeleton
+# node-angular1-material-skeleton
